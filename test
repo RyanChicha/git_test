@@ -1,0 +1,31 @@
+comment: Configuration in COPLAB cluster defined at 2013.03.26
+device:
+  client:                                                                              #客户端配置
+    type: HTTP   # options: SSH, HTTP                                                  #使用的应用层协议，可选：SSH,HTTP
+    internal_ip: [1, 1.1.1.1]                                                          #内网ip设置，[占用网卡号，测试环境内的ip地址]
+    managing_ip: [2, 192.168.2.221]                                                    #managing ip设置，[网卡号，服务器ip地址]
+  server:                                                                              #服务器配置
+    internal_ip: [eth0, 2.2.2.2]                                                       #内网ip设置，[占用网卡号，测试环境内的ip地址]
+    managing_ip: [eth1, 192.168.2.223]                                                 #managing ip设置，[占用网卡号，服务器ip地址]
+  router:                                                                              #路由配置
+    upward_ip:   [eth0, 2.2.2.254]                                                     #上行链路网卡及ip设置，[占用网卡号，上行链路ip]
+    downward_ip: [eth0, 1.1.1.254]                                                     #下行链路网卡及ip设置，[占用网卡号，下行链路ip]
+test_case:                                                                             #测试环境配置
+  - upward:  # case 1                                                                  #上行链路设置
+      #delay: 15ms  # in ms, other units are not supported                             #延时设置，单位为毫秒，不支持其他单位
+      #loss: 0%                                                                        #丢包率设置
+      #corrupt: 0%                                                                     #传输包的损坏率
+      #duplicate: 0%                                                                   #产生重复包的概率
+      #reorder: 0%                                                                     #传输包乱序的概率
+      rate: 2Mbit                                                                      #上行带宽
+      #limit: 1000                                                                     #上行链路拥塞设置，默认值为1000，数值越小，拥塞越大，一般同延时按 1：3 取值
+    downward:                                                                          #下行链路设置
+      delay: 30ms  # in ms, other units are not supported                              #延时设置，单位为毫秒，不支持其他单位
+      loss: 0%                                                                         #丢包率设置
+      corrupt: 0%                                                                      #传输包的损坏率
+      duplicate: 0%                                                                    #产生重复包的概率
+      reorder: 0%                                                                      #传输包乱序的概率
+      rate: 4Mbit                                                                      #下行带宽
+      limit: 1000                                                                      #下行链路拥塞设置，默认值为1000，数值越小，拥塞越大，一般同延时按 1：3 取值
+    repeat: 100                                                                        #测试取样次数
+    filesize: 6291456  # in byte, units like 'k', 'M' are not supported by now         #测试下载文件大小，单位为字节，千字节与兆字节单位暂不支持
